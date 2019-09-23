@@ -1,10 +1,10 @@
 <template>
   <v-navigation-drawer
-    v-model="drawer"
-    app
+      :value="getDrawer"
+      app
   >
     <v-list dense>
-      <v-list-item @click='doNotAnything'>
+      <v-list-item>
         <v-list-item-action>
           <v-icon>mdi-home</v-icon>
         </v-list-item-action>
@@ -12,7 +12,7 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item @click='doNotAnything'>
+      <v-list-item>
         <v-list-item-action>
           <v-icon>mdi-contact-mail</v-icon>
         </v-list-item-action>
@@ -25,9 +25,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  method: {
-    doNotAnything () {}
+  computed: {
+    ...mapGetters(['getDrawer'])
   }
 }
 </script>

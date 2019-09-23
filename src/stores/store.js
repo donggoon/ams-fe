@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state: {
-        drawer: null
+        drawer: false
     },
     getters,
     mutations

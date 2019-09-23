@@ -1,40 +1,10 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer
-      v-model="this.drawer"
-      app
-    >
-      <v-list dense>
-        <v-list-item @click='doNotAnything'>
-          <v-list-item-action>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item @click='doNotAnything'>
-          <v-list-item-action>
-            <v-icon>mdi-contact-mail</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Contact</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-app-bar
-      app
-      color="indigo"
-      dark
-    >
-      <v-app-bar-nav-icon @click.stop="this.onClickDrawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
-    </v-app-bar>
-
+    <app-drawer/>
+    <app-bar/>
     <v-content>
-      <v-container
+      <asset-status/>
+      <!-- <v-container
         class="fill-height"
         fluid
       >
@@ -74,32 +44,36 @@
             </v-tooltip>
           </v-col>
         </v-row>
-      </v-container>
+      </v-container> -->
     </v-content>
-    <v-footer
-      color="indigo"
-      app
-    >
-      <span class="white--text">&copy; 2019</span>
-    </v-footer>
+    <app-footer/>
   </v-app>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import AppDrawer from './components/common/AppDrawer'
+import AppBar from './components/common/AppBar'
+import AppFooter from './components/common/AppFooter'
+import AssetStatus from './components/AssetStatus'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   props: {
     source: String,
   },
   data: () => ({
-    doNotAnything: null
     // drawer: null,
   }),
-  computed: {
-    ...mapState(['drawer'])
+  components: {
+    AppDrawer,
+    AppBar,
+    AppFooter,
+    AssetStatus
   },
-  method: {
+  computed: {
+    ...mapGetters(['getDrawer'])
+  },
+  methods: {
     ...mapMutations(['onClickDrawer'])
   }
 }
