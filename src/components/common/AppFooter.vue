@@ -3,7 +3,7 @@
     color="indigo"
     app
   >
-    <span class="white--text">&copy; 2019</span>
+    <span class="white--text">&copy; 2019 Donggun Kim</span>
   </v-footer>
 </template>
 

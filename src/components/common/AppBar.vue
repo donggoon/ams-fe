@@ -5,7 +5,7 @@
     dark
   >
     <v-app-bar-nav-icon @click.stop="onClickDrawer"></v-app-bar-nav-icon>
-    <v-toolbar-title>Application</v-toolbar-title>
+    <v-toolbar-title>Asset Management System</v-toolbar-title>
   </v-app-bar>
 </template>
 
