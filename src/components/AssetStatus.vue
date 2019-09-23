@@ -101,7 +101,7 @@ export default {
           use: '사용',
           condition: '정상',
           user: '김동건',
-          department: '테크윈',
+          department: '방2',
           location: '본사(서울)',
           introdate: '',
           remarks: '신규등록(신입)'
@@ -116,10 +116,10 @@ export default {
           use: '사용',
           condition: '정상',
           user: '김동건',
-          department: '테크윈',
+          department: '방2',
           location: '본사(서울)',
           introdate: '',
-          remarks: '(배철한 차장 → 김동건 사원 이관)'
+          remarks: ''
         },
         {
           id: '11296',
@@ -131,10 +131,10 @@ export default {
           use: '사용',
           condition: '정상',
           user: '김동건',
-          department: '테크윈',
+          department: '방2',
           location: '본사(서울)',
           introdate: '43054',
-          remarks: '(배철한 차장 → 김동건 사원 이관)'
+          remarks: ''
         },
         {
           id: '11447',
@@ -146,10 +146,10 @@ export default {
           use: '사용',
           condition: '정상',
           user: '김동건',
-          department: '테크윈',
+          department: '방2',
           location: '본사(서울)',
           introdate: '43087',
-          remarks: '(배철한 차장 → 김동건 사원 이관)'
+          remarks: ''
         },
         {
           id: '11382',
@@ -161,10 +161,10 @@ export default {
           use: '사용',
           condition: '정상',
           user: '김동건',
-          department: '테크윈',
+          department: '방2',
           location: '본사(서울)',
           introdate: '43087',
-          remarks: '(배철한 차장 → 김동건 사원 이관)'
+          remarks: ''
         },
         {
           id: '',
@@ -176,7 +176,7 @@ export default {
           use: '사용',
           condition: '정상',
           user: '김동건',
-          department: '테크윈',
+          department: '방2',
           location: '본사(서울)',
           introdate: '',
           remarks: '2018-08-24 추가'
@@ -191,10 +191,10 @@ export default {
           use: '여유',
           condition: '정상',
           user: '김동건',
-          department: '테크윈',
+          department: '방2',
           location: '본사(서울)',
           introdate: '',
-          remarks: '(김경태 과장 → 서정우 대리 → 김동건 사원 이관)'
+          remarks: ''
         },
         {
           id: '',
@@ -206,10 +206,10 @@ export default {
           use: '여유',
           condition: '정상',
           user: '김동건',
-          department: '테크윈',
+          department: '방2',
           location: '기타(지방)',
           introdate: '43539',
-          remarks: '(PI팀 → 김동건 사원 이관 → 창원사업장 이관)'
+          remarks: ''
         },
         {
           id: '11426',
@@ -221,10 +221,10 @@ export default {
           use: '여유',
           condition: '정상',
           user: '김동건',
-          department: '테크윈',
+          department: '방2',
           location: '본사(서울)',
           introdate: '',
-          remarks: '(PI팀 → 김동건 사원 이관)'
+          remarks: ''
         },
         {
           id: '11427',
@@ -236,10 +236,10 @@ export default {
           use: '여유',
           condition: '정상',
           user: '김동건',
-          department: '테크윈',
+          department: '방2',
           location: '본사(서울)',
           introdate: '',
-          remarks: '(PI팀 → 김동건 사원 이관)'
+          remarks: ''
         },
         {
           id: '11440',
@@ -251,10 +251,10 @@ export default {
           use: '여유',
           condition: '정상',
           user: '김동건',
-          department: '테크윈',
+          department: '방2',
           location: '본사(서울)',
           introdate: '',
-          remarks: '(PI팀 → 김동건 사원 이관)'
+          remarks: ''
         },
         {
           id: '11436',
@@ -266,10 +266,10 @@ export default {
           use: '여유',
           condition: '정상',
           user: '김동건',
-          department: '테크윈',
+          department: '방2',
           location: '본사(서울)',
           introdate: '',
-          remarks: '(PI팀 → 김동건 사원 이관)'
+          remarks: ''
         }
       ],
     }
