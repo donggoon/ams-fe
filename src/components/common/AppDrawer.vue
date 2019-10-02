@@ -1,35 +1,20 @@
 <template>
   <v-navigation-drawer
-      :value="getDrawer"
-      app
+    :value="getDrawer"
+    app
   >
-    <v-list dense>
-      <router-link to="/hw">
-        <v-list-item>
-          <v-list-item-action>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </router-link>
-      <v-list-item>
-        <v-list-item-action>
-          <v-icon>mdi-contact-mail</v-icon>
-        </v-list-item-action>
-        <v-list-item-content>
-          <v-list-item-title>Contact</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
+    <app-treeview/>
   </v-navigation-drawer>
 </template>
 
 <script>
+import AppTreeview from './AppTreeview'
 import { mapGetters } from 'vuex'
 
 export default {
+  components: {
+    AppTreeview
+  },
   computed: {
     ...mapGetters(['getDrawer'])
   }

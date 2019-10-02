@@ -2,4 +2,8 @@ const getDrawer = (state) => {
     return state.drawer
 }
 
-export { getDrawer }
+const getMenu = (state) => {
+  return state.menu
+}
+
+export { getDrawer, getMenu }

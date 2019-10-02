@@ -7,8 +7,12 @@ Vue.use(VueRouter)
 export default new VueRouter({
   routes: [
     {
-      path: '/',
-      component: AssetStatus
+      path: '/assets',
+      name: 'AssetStatus',
+      component: AssetStatus,
+      meta: {
+        title: 'AssetStatus'
+      }
     }
   ]
 })

@@ -1,11 +1,11 @@
 <template>
   <v-app-bar
     app
-    color="indigo"
+    color="white"
     dark
   >
     <v-app-bar-nav-icon @click.stop="onClickDrawer"></v-app-bar-nav-icon>
-    <v-toolbar-title>Asset Management System</v-toolbar-title>
+    <v-toolbar-title></v-toolbar-title>
   </v-app-bar>
 </template>
 
