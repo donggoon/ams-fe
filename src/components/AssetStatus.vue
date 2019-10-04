@@ -5,28 +5,31 @@
       :items="assets"
       class="elevation-1"
       :search="search"
-      :items-per-page="500"
-      hide-default-footer
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
           <v-toolbar-title>자산관리</v-toolbar-title>
+          <v-divider
+            class="mx-4"
+            inset
+            vertical
+          ></v-divider>
           <div class="flex-grow-1"></div>
           <v-text-field
             v-model="search"
-            append-icon="mdi-find"
+            append-icon="mdi-search-web"
             label="검색어"
             single-line
             hide-details
           ></v-text-field>
           <div class="flex-grow-1"></div>
-          <v-dialog v-model="dialog" max-width="500px">
+          <v-dialog v-model="assetDialog" max-width="500px">
             <template v-slot:activator="{ on }">
               <v-btn color="primary" dark class="mb-2" v-on="on">신규</v-btn>
             </template>
             <v-card>
               <v-card-title>
-                <span class="headline">{{ formTitle }}</span>
+                <span class="headline">{{ assetFormTitle }}</span>
               </v-card-title>
               <v-card-text>
                 <v-container>
@@ -73,9 +76,32 @@
 
               <v-card-actions>
                 <div class="flex-grow-1"></div>
-                <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                <v-btn color="blue darken-1" text @click="assetClose">닫기</v-btn>
+                <v-btn color="blue darken-1" text @click="assetSave">저장</v-btn>
               </v-card-actions>
+            </v-card>
+          </v-dialog>
+          <v-dialog v-model="historyDialog">
+            <v-card>
+              <v-timeline dense clipped>
+                <v-timeline-item
+                  v-for="item in histories"
+                  :key="item._id"
+                  class="mb-4"
+                  color="grey"
+                  icon-color="grey lighten-2"
+                  small
+                >
+                  <v-row justify="space-between">
+                    <v-col cols="1">{{ item.asst_id }}</v-col>
+                    <v-col cols="1">{{ item.asst_no }}</v-col>
+                    <v-col cols="1">{{ item.cls_id }}</v-col>
+                    <v-col cols="3">{{ item.asst_nm }}</v-col>
+                    <v-col cols="3">{{ item.exi_user }} → {{ item.chg_user }}</v-col>
+                    <v-col cols="1">{{ item.tran_dt }}</v-col>
+                  </v-row>
+                </v-timeline-item>
+              </v-timeline>
             </v-card>
           </v-dialog>
         </v-toolbar>
@@ -84,15 +110,22 @@
         <v-icon
           small
           class="mr-2"
+          @click="showHistory(item)"
+        >
+          mdi-search-web
+        </v-icon>
+        <v-icon
+          small
+          class="mr-2"
           @click="editItem(item)"
         >
-          수정
+          mdi-pen
         </v-icon>
         <v-icon
           small
           @click="deleteItem(item)"
         >
-          삭제
+          mdi-delete
         </v-icon>
       </template>
       <template v-slot:no-data>
@@ -106,7 +139,8 @@
 export default {
   data () {
     return {
-      dialog: false,
+      assetDialog: false,
+      historyDialog: false,
       search: '',
       headers: [
         {
@@ -180,11 +214,18 @@ export default {
           align: 'center',
           sortable: true,
           value: 'tran_dt',
+        },
+        {
+          text: '편집',
+          align: 'center',
+          value: 'action',
+          sortable: false
         }
       ],
       assets: [],
       editedIndex: -1,
       editedItem: {
+        _id: '',
         asst_id: '',
         asst_no: '',
         type_cd: '',
@@ -199,6 +240,7 @@ export default {
         tran_dt: ''
       },
       defaultItem: {
+        _id: '',
         asst_id: '',
         asst_no: '',
         type_cd: '',
@@ -212,54 +254,77 @@ export default {
         loca_cd: '',
         tran_dt: ''
       },
+      histories: [],
     }
   },
   computed: {
-    formTitle () {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+    assetFormTitle () {
+      return this.editedIndex === -1 ? '신규 추가' : '정보 수정'
     },
+    historyFormTitle () {
+      return '이력 조회'
+    }
   },
   watch: {
-    dialog (val) {
-      val || this.close()
+    assetDialog (val) {
+      // eslint-disable-next-line
+      console.log(val || this.assetClose())
+      val || this.assetClose()
     },
+    historyDialog (val) {
+      val || this.assetClose()
+    }
   },
   methods: {
     initialize () {
       this.$http.get('api/assets').then((resp) => {
-        // eslint-disable-next-line
-        console.log(resp)
         this.assets = resp.data
       })
     },
 
     editItem (item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.assets.indexOf(item)
       this.editedItem = Object.assign({}, item)
-      this.dialog = true
+      this.assetDialog = true
     },
 
     deleteItem (item) {
-      const index = this.desserts.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+      const index = this.assets.indexOf(item)
+      if (confirm('자산 정보를 삭제하시겠습니까?')) {
+        this.$http.delete('api/assets/' + item._id)
+        this.assets.splice(index, 1)
+      }
     },
 
-    close () {
-      this.dialog = false
+    assetClose () {
+      this.assetDialog = false
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
       }, 300)
     },
 
-    save () {
+    assetSave () {
+      let today = new Date();
+      let dd = today.getDate();
+      let mm = today.getMonth() + 1;
+      let yyyy = today.getFullYear();
+
+      if (dd < 10) {
+        dd = '0' + dd;
+      }
+
+      if (mm < 10) {
+        mm = '0' + mm;
+      } 
+
+      today = yyyy + '-' + mm + '-' + dd;
+
       if (this.editedIndex > -1) {
         Object.assign(this.assets[this.editedIndex], this.editedItem)
-      } else {
-        this.assets.push(this.editedItem)
-        this.$http.post('api/assets', {
+        this.$http.put('api/assets/' + this.editedItem._id, {
           params: {
-            asst_id: this.editItem.asst_id,
+            asst_id: this.editedItem.asst_id,
             asst_no: this.editedItem.asst_no,
             type_cd: this.editedItem.type_cd,
             cls_id: this.editedItem.cls_id,
@@ -270,11 +335,51 @@ export default {
             user_nm: this.editedItem.user_nm,
             dept_nm: this.editedItem.dept_nm,
             loca_cd: this.editedItem.loca_cd,
-            tran_dt: this.editedItem.tran_dt
+            tran_dt: this.editedItem.tran_dt,
+            upd_id: 'donggunkim',
+            upd_dt: today
+          }
+        })
+      } else {
+        this.assets.push(this.editedItem)
+        this.$http.post('api/assets', {
+          params: {
+            asst_id: this.editedItem.asst_id,
+            asst_no: this.editedItem.asst_no,
+            type_cd: this.editedItem.type_cd,
+            cls_id: this.editedItem.cls_id,
+            asst_nm: this.editedItem.asst_nm,
+            mfg_co: this.editedItem.mfg_co,
+            use_cd: this.editedItem.use_cd,
+            stat_cd: this.editedItem.stat_cd,
+            user_nm: this.editedItem.user_nm,
+            dept_nm: this.editedItem.dept_nm,
+            loca_cd: this.editedItem.loca_cd,
+            tran_dt: this.editedItem.tran_dt,
+            ins_id: 'donggunkim',
+            ins_dt: today,
+            upd_id: 'donggunkim',
+            upd_dt: today
           }
         })
       }
-      this.close()
+      this.assetClose()
+    },
+
+    showHistory (item) {
+      // eslint-disable-next-line
+      console.log(item)
+      this.$http.get('api/histories/' + item.asst_no).then((resp) => {
+        this.histories = resp.data
+        // eslint-disable-next-line
+        console.log(resp.data)
+      })
+      this.historyDialog = true
+      // 요기다가 history 데이터 불러오는 로직 추가
+    },
+
+    historyClose () {
+      this.historyDialog = false
     },
   },
   created () {

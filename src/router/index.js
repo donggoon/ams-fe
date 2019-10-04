@@ -11,7 +11,7 @@ export default new VueRouter({
       name: 'AssetStatus',
       component: AssetStatus,
       meta: {
-        title: 'AssetStatus'
+        title: '자산현황'
       }
     }
   ]

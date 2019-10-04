@@ -1,11 +1,11 @@
 <template>
   <v-app-bar
     app
-    color="white"
+    color="indigo"
     dark
   >
     <v-app-bar-nav-icon @click.stop="onClickDrawer"></v-app-bar-nav-icon>
-    <v-toolbar-title></v-toolbar-title>
+    <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
   </v-app-bar>
 </template>
 
